@@ -55,4 +55,45 @@ resource "aws_key_pair" "console" {
   key_name = "console"
   public_key = "${file("console.pub")}"
 }
+
+resource "aws_instance" "console" {
+  ami = "ami-6154bb00"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.console.id}"]
+  key_name = "${aws_key_pair.console.key_name}"
+  subnet_id = "${aws_subnet.public.id}"
+  tags {
+    Name = "console"
+  }
+}
+
+resource "aws_eip" "console" {
+  instance = "${aws_instance.console.id}"
+  vpc = true
+}
+
+resource "aws_route53_record" "console" {
+   zone_id = "Z3K6FFH4ISWAX1"
+   name = "console.speg03.be"
+   type = "A"
+   ttl = "300"
+   records = ["${aws_eip.console.public_ip}"]
+}
+
+resource "aws_security_group" "console" {
+  name = "console"
+  vpc_id = "${aws_vpc.default.id}"
+  description = "console security group"
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
