@@ -51,7 +51,8 @@ resource "aws_subnet" "private" {
   }
 }
 
-resource "aws_key_pair" "console-speg03" {
-  key_name = "console-speg03"
-  public_key = "${file("console-speg03.pub")}"
+resource "aws_key_pair" "console" {
+  key_name = "console"
+  public_key = "${file("console.pub")}"
+}
 }
