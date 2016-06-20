@@ -56,9 +56,10 @@ resource "aws_key_pair" "console" {
   public_key = "${file("console.pub")}"
 }
 
-resource "aws_instance" "console" {
+resource "aws_spot_instance_request" "console" {
   ami = "ami-6154bb00"
-  instance_type = "t2.micro"
+  spot_price = "0.02"
+  instance_type = "m3.medium"
   vpc_security_group_ids = ["${aws_security_group.console.id}"]
   key_name = "${aws_key_pair.console.key_name}"
   subnet_id = "${aws_subnet.public.id}"
@@ -68,7 +69,7 @@ resource "aws_instance" "console" {
 }
 
 resource "aws_eip" "console" {
-  instance = "${aws_instance.console.id}"
+  instance = "${aws_spot_instance_request.console.spot_instance_id}"
   vpc = true
 }
 
