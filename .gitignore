@@ -1,2 +1,4 @@
+console
+console.pub
 terraform.tfstate
 terraform.tfstate.backup
