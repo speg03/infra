@@ -20,3 +20,10 @@ Host console
   StrictHostKeyChecking no
   ServerAliveInterval 60
 ```
+
+## Applying infrastructures on AWS
+
+```
+$ terraform plan
+$ terraform apply
+```
