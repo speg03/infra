@@ -3,7 +3,7 @@
 ## Generate SSH keys
 
 ```
-$ ssh-keygen -f console -N ''
+$ ssh-keygen -f console.pem -N ''
 ```
 
 ## SSH configuration
@@ -14,7 +14,7 @@ Host console
   User ec2-user
   Port 22
   PasswordAuthentication no
-  IdentityFile /path/to/console
+  IdentityFile /path/to/console.pem
   IdentitiesOnly yes
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no

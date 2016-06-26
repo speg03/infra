@@ -53,7 +53,7 @@ resource "aws_subnet" "private" {
 
 resource "aws_key_pair" "console" {
   key_name = "console"
-  public_key = "${file("console.pub")}"
+  public_key = "${file("console.pem.pub")}"
 }
 
 resource "aws_spot_instance_request" "console" {
